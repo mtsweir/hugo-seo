@@ -1,0 +1,74 @@
+{{ define "main" }}
+<section>
+	<div class="hero">
+		<div class="container col-xxl-8">
+			<div class="row align-items-center justify-content-center py-5 g-5">
+				<div class="col-10 col-sm-8 col-lg-6">
+					<img src="/img/bootstrap-themes.png" alt="Bootstrap Themes" class="img-fluid d-block mx-auto">
+				</div>
+				<div class="col-lg-6 order-lg-first">
+					<article>
+						<header>
+							<h1>{{ .Params.heading }}</h1>
+						</header>
+						<p class="lead">{{ .Content }}</p>
+						<div class="d-grid gap-2 d-md-flex">
+							{{ with .Params.btn1 }}
+							{{ if and .text .url }}
+							<a role="button" href="{{ .url }}" target="_blank" class="btn btn-lg btn-primary px-4 me-md-2">{{ .text
+								}}</a>
+							{{ end }}
+							{{ end }}
+							{{ with .Params.btn2 }}
+							{{ if and .text .url }}
+							<a role="button" href="{{ .url }}" target="_blank" class="btn btn-lg btn-outline-secondary px-4">{{ .text
+								}}</a>
+							{{ end }}
+							{{ end }}
+						</div>
+					</article>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div>
+		<div class="container">
+			<article>
+				<div class="row">
+					<div class="col text-center">
+						<header>
+							<h2 class="fs-1 pb-3">{{ .Params.cardsTitle }}</h2>
+						</header>
+					</div>
+				</div>
+
+				<div class="row pb-3">
+					{{ range .Params.cards }}
+					<div class="col-md-4">
+						<article class="h-100">
+							<div class="card h-100 mb-3">
+								<img src="{{ .img }}" class="card-img-top img-fluid" alt="{{ .title }}">
+								<div class="card-body d-flex flex-column">
+									<header>
+										<h3 class="h5 card-title">{{ .title }}</h3>
+									</header>
+									<p class="card-text">{{ .text }}</p>
+									{{ with .btn }}
+									{{ if and .url .text }}
+									<a href="{{ .url1 }}" class="btn btn-primary mt-auto">{{ .text }}</a>
+									{{ end }}
+									{{ end }}
+								</div>
+							</div>
+						</article>
+					</div>
+					{{ end }}
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+{{ end }}

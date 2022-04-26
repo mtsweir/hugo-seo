@@ -1,0 +1,4 @@
+{{/* create a new variable */}}
+{{- $src := resources.Get . -}}
+{{/* print to screen */}}
+{{- $src.Content | safeHTML -}}

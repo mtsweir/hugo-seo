@@ -1,0 +1,42 @@
+{{/* create a variable .page */}}
+{{ $src := .page.Resources.GetMatch .src }}
+
+{{/* create an array of widths */}}
+{{ $widths := .site.Params.image.widths.default }}
+{{ if eq .format "productSingle" }}
+  {{ $widths = site.Params.image.widths.productSingle }}
+{{ end }}
+{{/* sort images in ascending order */}}
+{{ $widths = sort $widths }}
+{{/* create a variable called $srcset }}
+{{ $srcset := slice }}
+{{ $img := "" }}
+{{/* range over widths to generate a width */}}
+{{/* create a $resize variable that exists within the range */}}
+{{ range $index, $width := $widths }}
+{{ $resize := $src.Resize (printf "%vx" $width) }}
+{{/* add to srcset: filename (rel), pixel width */}}
+{{ $srcset = $srcset | append (printf "%s %vw" ($resize.RelPermalink | safeURL ) $width) }}
+  {{ if eq (len $widths) (add $index 1) }}
+    {{ $img = $resize }}
+  {{ end }}
+{{ end }}
+{{/* get our slice of images with a comma between */}}
+{{ $srcset = delimit $srcset ", " }}
+
+<img
+  data-src="{{ $img.RelPermalink }}" 
+  data-srcset="{{ $srcset }}" 
+  class="img-fluid lazyload" 
+  width="{{ $img.Width }}" 
+  height="{{ $img.Height }}" 
+  alt="{{ .alt }}" 
+  data-sizes="auto">
+<noscript>
+	<img
+  src="{{ $img.RelPermalink }}" 
+	class="img-fluid" 
+  width="{{ $img.Width }}" 
+  height="{{ $img.Height }}" 
+  alt="{{ .alt }}">
+</noscript>

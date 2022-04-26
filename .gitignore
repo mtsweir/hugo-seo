@@ -1,0 +1,7 @@
+# Files
+.hugo_build.lock
+
+# Directories
+node_modules/
+public/
+resources/

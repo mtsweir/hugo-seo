@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}" class="no-js">
+<head>
+ {{ partial "head" . -}}
+ {{ partial "json-ld" . -}}
+ {{ block "JSON-LD" . }}{{ end }}
+</head>
+<body>
+	<header>
+  	{{ partial "header" . -}}
+	</header>
+	<main>
+  	{{ block "main" . }}{{ end }}
+	</main>
+	<footer>
+  	{{ partial "footer" . -}}
+	</footer>
+  {{ partial "scriptFooter" . -}}
+</body>
+</html>

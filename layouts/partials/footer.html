@@ -1,0 +1,50 @@
+<div class="container-fluid mt-3">
+	<div class="row bg-dark text-light py-3">
+		<div class="col-6 col-md-3">
+			<h5>Site links</h5>
+			<ul class="list-unstyled">
+				{{ range .Site.Menus.footerLinks }}
+				<li>
+					<a href="{{ .URL }}" class="text-light text-decoration-none">{{ .Name }}</a>
+				</li>
+				{{ end }}
+			</ul>
+		</div>
+		<div class="col-6 col-md-3">
+			<h5>Shop Categories</h5>
+			<ul class="list-unstyled">
+				{{ range .Site.Taxonomies.categories }}
+				<li>
+					<a href="{{ .Page.RelPermalink }}" class="text-light text-decoration-none">{{ .Page.Title | humanize | title }}</a>
+				</li>
+				{{ end }}
+			</ul>
+		</div>
+		<div class="col-6 col-md-3">
+			<h5>Our Services</h5>
+			<ul class="list-unstyled">
+				{{ range .Site.Menus.footerServices }}
+				<li>
+					<a href="{{ .URL }}" class="text-light text-decoration-none">{{ .Name }}</a>
+				</li>
+				{{ end }}
+			</ul>
+		</div>
+		<div class="col-6 col-md-3">
+			<h5>Contact Details</h5>
+			<ul class="list-unstyled">
+				<li>
+					<a href="#" class="text-light text-decoration-none">Phone</a>
+				</li>
+				<li>
+					<a href="#" class="text-light text-decoration-none">Email</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+  <div class="row">
+    <div class="col bg-dark text-light p-3">
+      Copyright &copy; <span id="js-year"><noscript>{{ now.Format "2006" }}</noscript></span> {{ with .Site.Copyright }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+{{ define "main" }}
+<section class="main">
+  <div class="container">
+		<article>
+			<div class="row">
+				<div class="col">
+					{{ partial "title" . }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					{{ with .Params.images }}
+					{{ with index . 0 }}
+					<!-- {{ with $.Resources.GetMatch . }}
+					<img src="{{ .RelPermalink }}" alt="" class="img-fluid">
+					{{ end }} -->
+					{{ partial "image" (dict "src" . "page" $ "alt" $.Title ) }}
+					{{ end }}
+					{{ end }}
+				</div>
+				<div class="col-md-6">
+					{{ with .Params.price }}
+					Price: {{ . }}
+					{{ end }}
+					{{ with .Params.brand }}
+					<br>
+					Brand: {{ . }}  
+					{{ end }}
+					{{ with .Params.mpn }}
+					<br>
+					Model Number: {{ . }}  
+					{{ end }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="py-3">Description: <br>{{ .Content }}</div>
+				</div>
+			</div>
+		</article>
+  </div>
+</section>
+{{ end }}
+
+{{ define "JSON-LD" }}
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org/",
+	"@type": "Product",
+	"name": "{{ .Title }}",
+	{{ with .Params.images -}}
+	"image": [
+		{{ range $index, $element := . -}}
+		{{- if ne $index 0 -}}, {{ end }}
+		{{ $image := $.Resources.GetMatch $element -}}
+		{{ $image.Permalink -}}
+		{{- end }}
+		],
+	{{ end }}
+	"description": {{ replace .Plain "\n" " " }},
+	{{ with .Params.sku -}}
+	"sku": "{{ . }}",
+	{{ end -}}
+	{{ with .Params.mpn -}}
+	"mpn": "{{ . }}",
+	{{ end -}}
+	{{ with .Params.brand -}}
+	"brand": {
+		"@type": "Brand",
+		"name": "{{ . }}"
+	},
+	{{ end -}}
+	"offers": {
+		"@type": "Offer",
+		"url": {{ .Permalink }},
+		"priceCurrency": "NZD",
+		"price": "{{ .Params.price }}",
+		"itemCondition": "https://schema.org/NewCondition",
+		"availability": "https://schema.org/InStock"
+	}
+}
+</script>
+{{ end }}

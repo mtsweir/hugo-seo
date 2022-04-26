@@ -1,0 +1,43 @@
+{{- /* Create path/breadcrumb scratches */ -}}
+{{- .Scratch.Set "path" "" -}}
+{{- .Scratch.Set "breadcrumb" slice -}}
+{{- /* remove baseURL from URL to create path */ -}}
+{{- $path := replace .Permalink .Site.BaseURL "" -}}
+{{- /* split the path */ -}}
+{{- $path = split $path "/" -}}
+{{- /* set path/breadcrumb for home */ -}}
+{{- .Scratch.Add "path" .Site.BaseURL -}}
+{{- .Scratch.Add "breadcrumb" (slice (dict "url" .Site.BaseURL "name" "home" "position" 1)) -}}
+{{- /* set path/breadcrumb for every level present */ -}}
+{{- range $index, $element := $path -}}
+{{- $.Scratch.Add "path" $element -}}
+{{- $.Scratch.Add "path" "/" -}}
+{{- if ne $element "" -}}
+{{- $.Scratch.Add "breadcrumb" (slice (dict "url" ($.Scratch.Get "path") "name" $element "position" (add $index 2))) -}}
+{{- end -}}
+{{- end -}}
+{{- /* prepare data for breadcrumb json-ld */ -}}
+{{- $list := .Scratch.Get "breadcrumb" -}}
+{{- $length := (len $list) -}}
+
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [{
+			{{- range $index, $element := $list -}}
+			{{- if ne $index 0 -}}, {{ end }}
+			{
+			"@type": "ListItem",
+			"position": {{ .position }},
+			{{- if ne $length (add $index 1) }}
+			"name": "{{ .name | humanize | title }}",
+			"item": {{ .url }}
+			{{ else }}
+			"name": "{{ $.Title | humanize | title }}"
+			{{- end -}}
+			}
+			{{- end -}}
+		]
+	}
+</script>

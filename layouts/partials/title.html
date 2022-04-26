@@ -1,0 +1,6 @@
+<header>
+	<h1>{{ .Title }}</h1>
+	{{ with .Params.subtitle }}
+	<div class="h2 fst-italic fs-3 text-muted">{{ . }}</div>
+	{{ end }}
+</header>

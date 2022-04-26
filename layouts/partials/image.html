@@ -2,13 +2,13 @@
 {{ $src := .page.Resources.GetMatch .src }}
 
 {{/* create an array of widths */}}
-{{ $widths := .site.Params.image.widths.default }}
+{{ $widths := site.Params.image.widths.default }}
 {{ if eq .format "productSingle" }}
   {{ $widths = site.Params.image.widths.productSingle }}
 {{ end }}
 {{/* sort images in ascending order */}}
 {{ $widths = sort $widths }}
-{{/* create a variable called $srcset }}
+{{/* create a variable called $srcset */}}
 {{ $srcset := slice }}
 {{ $img := "" }}
 {{/* range over widths to generate a width */}}

@@ -1,4 +1,5 @@
-{{/* create a new variable */}}
-{{- $src := resources.Get . -}}
-{{/* print to screen */}}
-{{- $src.Content | safeHTML -}}
+{{- with $src := resources.Get . -}}
+  {{- $src.Content | safeHTML -}}
+{{ else }}
+{{ errorf "Icon /assets/%s cannot be found" $ }}
+{{ end }}

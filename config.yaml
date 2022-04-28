@@ -1,4 +1,4 @@
-baseURL: http://localhost/
+baseURL: http://localhost/ 
 # for xml output
 languageCode: "en-nz"
 # for website
@@ -16,10 +16,11 @@ summaryLength: 70
 # enables robots.txt
 enableRobotsTXT: true
 # remove all white spaces when minifying
-minify:
-  tdewolff:
-    html:
-      keepWhitespace: false
+# not required for newer versions of hugo
+# minify:
+#   tdewolff:
+#     html:
+#       keepWhitespace: false
 # this is required so that Hugo will render markdown to HTML
 markup:
   goldmark:
